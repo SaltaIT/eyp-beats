@@ -35,7 +35,7 @@
 #
 # Copyright 2015 Your name here, unless otherwise noted.
 #
-class beats($import_repo=true, $beats=[ 'topbeat' ]) inherits beats::params {
+class beats($import_repo=true) inherits beats::params {
 
   Exec {
     path => '/usr/sbin:/usr/bin:/sbin:/bin',
@@ -60,7 +60,7 @@ class beats($import_repo=true, $beats=[ 'topbeat' ]) inherits beats::params {
       #TODO!
     }
 
-    
+
   }
 
 }
