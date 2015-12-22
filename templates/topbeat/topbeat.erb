@@ -29,7 +29,7 @@ input:
 # Configure what outputs to use when sending the data collected by the beat.
 # Multiple outputs may be used.
 output:
-
+<% if defined?(@elasticsearchhost) %>
   ### Elasticsearch as output
   #elasticsearch:
     # Array of hosts to connect to.
@@ -48,7 +48,7 @@ output:
 
     # Optional index name. The default is "topbeat" and generates
     # [topbeat-]YYYY.MM.DD keys.
-    #index: "topbeat"
+    index: "<%= @index %>"
 
     # Optional HTTP Path
     #path: "/elasticsearch"
@@ -106,8 +106,8 @@ output:
 
       # Configure maximum TLS version allowed for connection to logstash
       #max_version: 1.2
-
-
+<% end %>
+<% if defined?(@logstashhost) %>
   ### Logstash as output
   logstash:
     # The Logstash hosts
@@ -122,7 +122,7 @@ output:
     # Optional index name. The default index name depends on the each beat.
     # For Packetbeat, the default is set to packetbeat, for Topbeat
     # top topbeat and for Filebeat to filebeat.
-    #index: topbeat
+    index: <%= @index %>
 
     # Optional TLS. By default is off.
     #tls:
@@ -146,15 +146,15 @@ output:
 
       # Configure curve types for ECDHE based cipher suites
       #curve_types: []
-
-
+<% end %>
+<% if defined?(@filepath) %>
   ### File as output
   #file:
     # Path to the directory where to save the generated files. The option is mandatory.
     #path: "/tmp/topbeat"
 
     # Name of the generated files. The default is `topbeat` and it generates files: `topbeat`, `topbeat.1`, `topbeat.2`, etc.
-    #filename: topbeat
+    filename: <%= @index %>
 
     # Maximum size in kilobytes of each file. When this size is reached, the files are
     # rotated. The default value is 10 MB.
@@ -164,7 +164,7 @@ output:
     # oldest file is deleted and the rest are shifted from last to first. The default
     # is 7 files.
     #number_of_files: 7
-
+<% end %>
 
   ### Console output
   # console:
