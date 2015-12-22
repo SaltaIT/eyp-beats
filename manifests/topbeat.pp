@@ -7,7 +7,8 @@ class beats::topbeat(
                     ) inherits beats::params {
 
   package { 'topbeat':
-    ensure => 'installed',
+    ensure  => 'installed',
+    require => Class['beats'],
   }
 
   file { '/etc/topbeat/topbeat.yml':
