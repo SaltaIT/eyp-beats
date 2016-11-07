@@ -5,7 +5,7 @@ class beats::filebeat (
                         $outfilepath    = undef,
                       ) inherits beats {
 
-  validate_array($filebeat_paths)
+  validate_array($paths)
 
   package { 'filebeat':
     ensure  => 'installed',
