@@ -47,7 +47,7 @@ class beats (
       #sudo rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
       exec { 'rpm import gpg eyp-beats repo':
         command => 'rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch',
-        unless  => "bash -c 'rpm -q gpg-pubkey-$(gpg --throw-keyids < ${srcdir}/GPG-KEY-elasticsearch | grep \"^pub\" | awk \"{ print \\\$2 }\" | cut -f2 -d/ | tr [A-Z] [a-z])'",
+        unless  => "bash -c 'rpm -q gpg-pubkey-$(cat ${srcdir}/GPG-KEY-elasticsearch | gpg --throw-keyids | grep \"^pub\" | awk \"{ print \\\$2 }\" | cut -f2 -d/ | tr [A-Z] [a-z])'",
         require => Exec['wget beats gpgkey'],
       }
 
