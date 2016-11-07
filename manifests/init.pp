@@ -48,11 +48,11 @@ class beats (
 
   if($import_repo)
   {
-    if(!$yumrepo)
+    if(!$beats::params::yumrepo)
     {
       exec { 'import key eyp-beats':
         command => 'curl https://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -',
-        unless => 'apt-key list | grep \'Elasticsearch (Elasticsearch Signing Key) <dev_ops@elasticsearch.org>\'',
+        unless  => 'apt-key list | grep \'Elasticsearch (Elasticsearch Signing Key) <dev_ops@elasticsearch.org>\'',
       }
 
       exec { 'add repo':

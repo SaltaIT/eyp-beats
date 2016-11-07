@@ -17,7 +17,7 @@ class beats::params {
         {
           $yumrepo=true
         }
-        default: { fail("Unsupported RHEL/CentOS version!")  }
+        default: { fail('Unsupported RHEL/CentOS version!')  }
       }
     }
     'Debian':
@@ -38,13 +38,13 @@ class beats::params {
             {
               $yumrepo=false
             }
-            default: { fail("Unsupported Ubuntu version! - $::operatingsystemrelease")  }
+            default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }
           }
         }
-        'Debian': { fail("Unsupported")  }
-        default: { fail("Unsupported Debian flavour!")  }
+        'Debian': { fail('Unsupported')  }
+        default: { fail('Unsupported Debian flavour!')  }
       }
     }
-    default: { fail("Unsupported OS!")  }
+    default: { fail('Unsupported OS!')  }
   }
 }
