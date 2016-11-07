@@ -40,7 +40,6 @@ class beats (
               $import_repo             = true,
               $logstashhost            = undef,
               $elasticsearchhost       = undef,
-
             ) inherits beats::params {
 
   Exec {
