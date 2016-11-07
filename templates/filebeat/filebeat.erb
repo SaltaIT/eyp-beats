@@ -153,12 +153,12 @@ filebeat:
 output:
 <% if defined?(@elasticsearchhost) %>
   ### Elasticsearch as output
-  #elasticsearch:
+  elasticsearch:
     # Array of hosts to connect to.
     # Scheme and port can be left out and will be set to the default (http and 9200)
     # In case you specify and additional path, the scheme is required: http://localhost:9200/path
     # IPv6 addresses should always be defined as: https://[2001:db8::1]:9200
-    #hosts: ["localhost:9200"]
+    hosts: ["<%= @elasticsearchhost %>"]
 
     # Optional protocol and basic auth credentials. These are deprecated.
     #protocol: "https"
@@ -269,11 +269,11 @@ output:
       # Configure curve types for ECDHE based cipher suites
       #curve_types: []
 <% end %>
-<% if defined?(@filebeat_filepath) %>
+<% if defined?(@filebeat_outfilepath) %>
   ### File as output
-  #file:
+  file:
     # Path to the directory where to save the generated files. The option is mandatory.
-    #path: "/tmp/filebeat"
+    path: "<%= @filebeat_outfilepath %>"
 
     # Name of the generated files. The default is `filebeat` and it generates files: `filebeat`, `filebeat.1`, `filebeat.2`, etc.
     filename: <%= @filebeat_index %>

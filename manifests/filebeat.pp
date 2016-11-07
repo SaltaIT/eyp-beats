@@ -11,7 +11,7 @@ class beats::filebeat() inherits beats {
     group   => 'root',
     mode    => '0644',
     content => template("${module_name}/filebeat/filebeat.erb"),
-    require => Package['topbeat'],
+    require => Package['filebeat'],
   }
 
   service { 'filebeat':

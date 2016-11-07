@@ -36,15 +36,15 @@
 # Copyright 2015 Your name here, unless otherwise noted.
 #
 class beats (
-              $srcdir            = '/usr/local/src',
-              $import_repo       = true,
-              $topbeat_index     = 'topbeat',
-              $filebeat_index    = 'filebeat',
-              $filebeat_paths    = $filebeat_paths_default,
-              $logstashhost      = undef,
-              $elasticsearchhost = undef,
-              $topbeat_filepath  = undef,
-              $filebeat_filepath = undef,
+              $srcdir               = '/usr/local/src',
+              $import_repo          = true,
+              $topbeat_index        = 'topbeat',
+              $filebeat_index       = 'filebeat',
+              $filebeat_paths       = $filebeat_paths_default,
+              $logstashhost         = undef,
+              $elasticsearchhost    = undef,
+              $topbeat_outfilepath  = undef,
+              $filebeat_outfilepath = undef,
             ) inherits beats::params {
 
   Exec {

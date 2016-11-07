@@ -147,11 +147,11 @@ output:
       # Configure curve types for ECDHE based cipher suites
       #curve_types: []
 <% end %>
-<% if defined?(@topbeat_filepath) %>
+<% if defined?(@topbeat_outfilepath) %>
   ### File as output
-  #file:
+  file:
     # Path to the directory where to save the generated files. The option is mandatory.
-    #path: "/tmp/topbeat"
+    path: "<%= @topbeat_outfilepath %>"
 
     # Name of the generated files. The default is `topbeat` and it generates files: `topbeat`, `topbeat.1`, `topbeat.2`, etc.
     filename: <%= @topbeat_index %>
