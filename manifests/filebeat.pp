@@ -1,6 +1,6 @@
 class beats::filebeat (
                         $index          = 'filebeat',
-                        $paths          = $filebeat_paths_default,
+                        $paths          = $beats::params::filebeat_paths_default,
                         $scan_frequency = '10s',
                         $outfilepath    = undef,
                       ) inherits beats {
