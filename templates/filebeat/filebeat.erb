@@ -168,9 +168,9 @@ output:
     # Number of workers per Elasticsearch host.
     #worker: 1
 
-    # Optional index name. The default is "topbeat" and generates
-    # [topbeat-]YYYY.MM.DD keys.
-    index: "<%= @topbeat_index %>"
+    # Optional index name. The default is "filebeat" and generates
+    # [filebeat-]YYYY.MM.DD keys.
+    index: "<%= @filebeat_index %>"
 
     # Optional HTTP Path
     #path: "/elasticsearch"
@@ -242,9 +242,9 @@ output:
     #loadbalance: true
 
     # Optional index name. The default index name depends on the each beat.
-    # For Packetbeat, the default is set to packetbeat, for Topbeat
-    # top topbeat and for Filebeat to filebeat.
-    index: <%= @topbeat_index %>
+    # For Packetbeat, the default is set to packetbeat, for filebeat
+    # top filebeat and for Filebeat to filebeat.
+    index: <%= @filebeat_index %>
 
     # Optional TLS. By default is off.
     #tls:
@@ -269,14 +269,14 @@ output:
       # Configure curve types for ECDHE based cipher suites
       #curve_types: []
 <% end %>
-<% if defined?(@filepath) %>
+<% if defined?(@filebeat_filepath) %>
   ### File as output
   #file:
     # Path to the directory where to save the generated files. The option is mandatory.
-    #path: "/tmp/topbeat"
+    #path: "/tmp/filebeat"
 
-    # Name of the generated files. The default is `topbeat` and it generates files: `topbeat`, `topbeat.1`, `topbeat.2`, etc.
-    filename: <%= @topbeat_index %>
+    # Name of the generated files. The default is `filebeat` and it generates files: `filebeat`, `filebeat.1`, `filebeat.2`, etc.
+    filename: <%= @filebeat_index %>
 
     # Maximum size in kilobytes of each file. When this size is reached, the files are
     # rotated. The default value is 10 MB.

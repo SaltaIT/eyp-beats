@@ -16,7 +16,6 @@ class beats::params {
 				/^[67].*$/:
 				{
 					$yumrepo=true
-          fail('TODO!')
 				}
 				default: { fail("Unsupported RHEL/CentOS version!")  }
 			}
