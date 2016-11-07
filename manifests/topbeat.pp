@@ -1,10 +1,6 @@
 class beats::topbeat(
-                      $period='60',
-                      $index='topbeat',
-                      $logstashhost=undef,
-                      $elasticsearchhost=undef,
-                      $filepath=undef
-                    ) inherits beats::params {
+                      $period            = '60',
+                    ) inherits beats {
 
   package { 'topbeat':
     ensure  => 'installed',

@@ -1,4 +1,4 @@
-class beats::filebeat() inherits beats::params {
+class beats::filebeat() inherits beats {
 
   package { 'filebeat':
     ensure  => 'installed',

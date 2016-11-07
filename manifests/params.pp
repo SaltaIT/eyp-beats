@@ -4,7 +4,13 @@ class beats::params {
 	{
 		'redhat':
     {
-
+			$filebeat_paths_default = [
+																	'/var/log/messages',
+																	'/var/log/secure',
+																	'/var/log/yum.log',
+																	'/var/log/cron',
+																	'/var/log/maillog',
+																]
 			case $::operatingsystemrelease
 			{
 				/^[67].*$/:
@@ -17,6 +23,12 @@ class beats::params {
 		}
 		'Debian':
 		{
+			$filebeat_paths_default = [
+																	'/var/log/auth.log',
+																	'/var/log/syslog',
+																	'/var/log/dpkg.log',
+																	'/var/log/mail.log',
+																]
 			case $::operatingsystem
 			{
 				'Ubuntu':

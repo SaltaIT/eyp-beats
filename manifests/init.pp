@@ -35,7 +35,16 @@
 #
 # Copyright 2015 Your name here, unless otherwise noted.
 #
-class beats($import_repo=true) inherits beats::params {
+class beats (
+              $import_repo       = true,
+              $topbeat_index     = 'topbeat',
+              $filebeat_index    = 'filebeat',
+              $filebeat_paths    = $filebeat_paths_default,
+              $logstashhost      = undef,
+              $elasticsearchhost = undef,
+              $topbeat_filepath  = undef,
+              $filebeat_filepath = undef,
+            ) inherits beats::params {
 
   Exec {
     path => '/usr/sbin:/usr/bin:/sbin:/bin',
@@ -43,7 +52,7 @@ class beats($import_repo=true) inherits beats::params {
 
   if($import_repo)
   {
-    exec { 'import key':
+    exec { 'import key eyp-beats':
       command => 'curl https://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -',
       unless => 'apt-key list | grep \'Elasticsearch (Elasticsearch Signing Key) <dev_ops@elasticsearch.org>\'',
     }
@@ -52,12 +61,12 @@ class beats($import_repo=true) inherits beats::params {
     {
       exec { 'add repo':
         command => 'bash -c \'echo "deb https://packages.elastic.co/beats/apt stable main" >> /etc/apt/sources.list.d/beats.list; apt-get update\'',
-        require => Exec['import key'],
+        require => Exec['import key eyp-beats'],
       }
     }
     else
     {
-      #TODO!
+      fail('repo install failed: TODO')
     }
 
 

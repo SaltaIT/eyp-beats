@@ -151,14 +151,14 @@ filebeat:
 # Configure what outputs to use when sending the data collected by the beat.
 # Multiple outputs may be used.
 output:
-
+<% if defined?(@elasticsearchhost) %>
   ### Elasticsearch as output
-  elasticsearch:
+  #elasticsearch:
     # Array of hosts to connect to.
     # Scheme and port can be left out and will be set to the default (http and 9200)
     # In case you specify and additional path, the scheme is required: http://localhost:9200/path
     # IPv6 addresses should always be defined as: https://[2001:db8::1]:9200
-    hosts: ["localhost:9200"]
+    #hosts: ["localhost:9200"]
 
     # Optional protocol and basic auth credentials. These are deprecated.
     #protocol: "https"
@@ -168,9 +168,9 @@ output:
     # Number of workers per Elasticsearch host.
     #worker: 1
 
-    # Optional index name. The default is "filebeat" and generates
-    # [filebeat-]YYYY.MM.DD keys.
-    #index: "filebeat"
+    # Optional index name. The default is "topbeat" and generates
+    # [topbeat-]YYYY.MM.DD keys.
+    index: "<%= @topbeat_index %>"
 
     # Optional HTTP Path
     #path: "/elasticsearch"
@@ -228,12 +228,12 @@ output:
 
       # Configure maximum TLS version allowed for connection to logstash
       #max_version: 1.2
-
-
+<% end %>
+<% if defined?(@logstashhost) %>
   ### Logstash as output
-  #logstash:
+  logstash:
     # The Logstash hosts
-    #hosts: ["localhost:5044"]
+    hosts: ["80.169.245.111:5044"]
 
     # Number of workers per Logstash host.
     #worker: 1
@@ -244,7 +244,7 @@ output:
     # Optional index name. The default index name depends on the each beat.
     # For Packetbeat, the default is set to packetbeat, for Topbeat
     # top topbeat and for Filebeat to filebeat.
-    #index: filebeat
+    index: <%= @topbeat_index %>
 
     # Optional TLS. By default is off.
     #tls:
@@ -268,15 +268,15 @@ output:
 
       # Configure curve types for ECDHE based cipher suites
       #curve_types: []
-
-
+<% end %>
+<% if defined?(@filepath) %>
   ### File as output
   #file:
     # Path to the directory where to save the generated files. The option is mandatory.
-    #path: "/tmp/filebeat"
+    #path: "/tmp/topbeat"
 
-    # Name of the generated files. The default is `filebeat` and it generates files: `filebeat`, `filebeat.1`, `filebeat.2`, etc.
-    #filename: filebeat
+    # Name of the generated files. The default is `topbeat` and it generates files: `topbeat`, `topbeat.1`, `topbeat.2`, etc.
+    filename: <%= @topbeat_index %>
 
     # Maximum size in kilobytes of each file. When this size is reached, the files are
     # rotated. The default value is 10 MB.
@@ -286,13 +286,12 @@ output:
     # oldest file is deleted and the rest are shifted from last to first. The default
     # is 7 files.
     #number_of_files: 7
-
+<% end %>
 
   ### Console output
   # console:
     # Pretty print json event
     #pretty: false
-
 
 ############################# Shipper #########################################
 
