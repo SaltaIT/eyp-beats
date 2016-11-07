@@ -1,5 +1,7 @@
 class beats::topbeat(
                       $period            = '60',
+                      $outfilepath     = undef,
+                      $index           = 'topbeat',
                     ) inherits beats {
 
   package { 'topbeat':

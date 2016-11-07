@@ -1,4 +1,11 @@
-class beats::filebeat() inherits beats {
+class beats::filebeat (
+                        $index          = 'filebeat',
+                        $paths          = $filebeat_paths_default,
+                        $scan_frequency = '10s',
+                        $outfilepath    = undef,
+                      ) inherits beats {
+
+  validate_array($filebeat_paths)
 
   package { 'filebeat':
     ensure  => 'installed',

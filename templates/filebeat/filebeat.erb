@@ -18,7 +18,10 @@ filebeat:
       # For each file found under this path, a harvester is started.
       # Make sure not file is defined twice as this can lead to unexpected behaviour.
       paths:
-        - /var/log/*.log
+        <%- @paths.each do | value | -%>
+        - <%= value %>
+        <%- end -%>
+
       # - c:\programdata\elasticsearch\logs\*
 
       # Configure the file encoding for reading files with international characters
@@ -60,7 +63,7 @@ filebeat:
       # Scan frequency in seconds.
       # How often these files should be checked for changes. In case it is set
       # to 0s, it is done as often as possible. Default: 10s
-      #scan_frequency: 10s
+      scan_frequency: <%= @scan_frequency %>
 
       # Defines the buffer size every harvester uses when fetching the file
       #harvester_buffer_size: 16384
@@ -170,7 +173,7 @@ output:
 
     # Optional index name. The default is "filebeat" and generates
     # [filebeat-]YYYY.MM.DD keys.
-    index: "<%= @filebeat_index %>"
+    index: "<%= @index %>"
 
     # Optional HTTP Path
     #path: "/elasticsearch"
@@ -244,7 +247,7 @@ output:
     # Optional index name. The default index name depends on the each beat.
     # For Packetbeat, the default is set to packetbeat, for filebeat
     # top filebeat and for Filebeat to filebeat.
-    index: <%= @filebeat_index %>
+    index: <%= @index %>
 
     # Optional TLS. By default is off.
     #tls:
@@ -269,14 +272,14 @@ output:
       # Configure curve types for ECDHE based cipher suites
       #curve_types: []
 <% end %>
-<% if defined?(@filebeat_outfilepath) %>
+<% if defined?(@outfilepath) %>
   ### File as output
   file:
     # Path to the directory where to save the generated files. The option is mandatory.
-    path: "<%= @filebeat_outfilepath %>"
+    path: "<%= @outfilepath %>"
 
     # Name of the generated files. The default is `filebeat` and it generates files: `filebeat`, `filebeat.1`, `filebeat.2`, etc.
-    filename: <%= @filebeat_index %>
+    filename: <%= @index %>
 
     # Maximum size in kilobytes of each file. When this size is reached, the files are
     # rotated. The default value is 10 MB.
