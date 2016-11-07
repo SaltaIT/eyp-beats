@@ -88,7 +88,8 @@ class beats (
       #sudo rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
       exec { 'rpm import gpg eyp-beats repo':
         command => 'rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch',
-        unless  => "bash -c 'rpm -q gpg-pubkey-$(gpg --throw-keyids < GPG-KEY-elasticsearch | grep \"^pub\" | awk \"{ print \\\$2 }\" | cut -f2 -d/ | tr [A-Z] [a-z])'"
+        unless  => "bash -c 'rpm -q gpg-pubkey-$(gpg --throw-keyids < GPG-KEY-elasticsearch | grep \"^pub\" | awk \"{ print \\\$2 }\" | cut -f2 -d/ | tr [A-Z] [a-z])'",
+        require => Exec['wget beats gpgkey'],
       }
 
       # Create a file with a .repo extension (for example, elastic.repo) in your /etc/yum.repos.d/ directory and add the following lines:
@@ -101,6 +102,15 @@ class beats (
       # enabled=1
       # autorefresh=1
       # type=rpm-md
+
+      yumrepo { 'elastic-5.x':
+        baseurl  => 'https://artifacts.elastic.co/packages/5.x/yum',
+        descr    => 'Elastic repository for 5.x packages',
+        enabled  => '1',
+        gpgcheck => '1',
+        gpgkey   => 'https://artifacts.elastic.co/GPG-KEY-elasticsearch',
+        require  => Exec['rpm import gpg eyp-beats repo'],
+      }
 
     }
 
