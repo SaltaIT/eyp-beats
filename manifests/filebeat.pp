@@ -20,10 +20,16 @@ class beats::filebeat (
     require => Package['filebeat'],
   }
 
-  concat::fragment { 'filebeat header config':
+  concat::fragment { 'filebeat header + filebeat config':
     target  => '/etc/filebeat/filebeat.yml',
     order   => '00',
     content => template("${module_name}/filebeat/filebeat.erb"),
+  }
+
+  concat::fragment { 'filebeat general filebeat config':
+    target  => '/etc/filebeat/filebeat.yml',
+    order   => '09',
+    content => template("${module_name}/filebeat/general_filebeat.erb"),
   }
 
   concat::fragment { 'filebeat output config':

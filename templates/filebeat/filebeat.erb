@@ -123,28 +123,3 @@ filebeat:
     #  type: stdin
     #  paths:
     #    - "-"
-
-  # General filebeat configuration options
-  #
-  # Event count spool threshold - forces network flush if exceeded
-  #spool_size: 1024
-
-  # Defines how often the spooler is flushed. After idle_timeout the spooler is
-  # Flush even though spool_size is not reached.
-  #idle_timeout: 5s
-
-  # Name of the registry file. Per default it is put in the current working
-  # directory. In case the working directory is changed after when running
-  # filebeat again, indexing starts from the beginning again.
-  registry_file: /var/lib/filebeat/registry
-
-  # Full Path to directory with additional prospector configuration files. Each file must end with .yml
-  # These config files must have the full filebeat config part inside, but only
-  # the prospector part is processed. All global options like spool_size are ignored.
-  # The config_dir MUST point to a different directory then where the main filebeat config file is in.
-  #config_dir:
-
-
-###############################################################################
-############################# Libbeat Config ##################################
-# Base config file used by all other beats for using libbeat features
