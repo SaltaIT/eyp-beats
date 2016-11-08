@@ -2,6 +2,7 @@
 # filebeat.yml concat:
 #
 # 00 - header + filebeat config
+# 05 - tomcatlog
 # 09 - filebeat general config
 # 10 - output config
 # 20 - shipper config

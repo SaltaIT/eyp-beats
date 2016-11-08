@@ -1,0 +1,32 @@
+    # tomcat propector
+    -
+      # Paths that should be crawled and fetched. Glob based paths.
+      # To fetch all ".log" files from a specific level of subdirectories
+      # /var/log/*/*.log can be used.
+      # For each file found under this path, a harvester is started.
+      # Make sure not file is defined twice as this can lead to unexpected behaviour.
+      paths:
+        <%- @paths.each do | value | -%>
+        - <%= value %>
+        <%- end -%>
+
+      #encoding: plain
+      input_type: log
+      #fields:
+      #  level: debug
+      #  review: 1
+      #fields_under_root: false
+      #ignore_older: 24h
+      document_type: tomcat_log
+      multiline:
+        pattern: '^/\d{4}-\d{2}-\d{2} \d{2}\:\d{2}\:\d{2} '
+        negate: true
+        match: after
+      scan_frequency: <%= @scan_frequency %>
+      #harvester_buffer_size: 16384
+      #tail_files: false
+      #backoff: 1s
+      #max_backoff: 10s
+      #backoff_factor: 2
+      #partial_line_waiting: 5s
+      #force_close_files: false
