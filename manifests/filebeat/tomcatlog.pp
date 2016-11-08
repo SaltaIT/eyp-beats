@@ -1,5 +1,5 @@
 class beats::filebeat::tomcatlog(
-                                  $paths = [ '/opt/tomcat-8080/logs/catalina.out' ],
+                                  $paths          = [ '/opt/tomcat-8080/logs/catalina.out' ],
                                   $scan_frequency = '10s',
                                 ) inherits beats::filebeat {
   validate_array($paths)
