@@ -1,3 +1,12 @@
+#
+# filebeat.yml concat:
+#
+# 00 - header + filebeat config
+# 09 - filebeat general config
+# 10 - output config
+# 20 - shipper config
+# 30 - logging config
+#
 class beats::filebeat (
                         $index          = 'filebeat',
                         $paths          = $beats::params::filebeat_paths_default,
