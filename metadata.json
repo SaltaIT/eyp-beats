@@ -1,6 +1,6 @@
 {
   "name": "eyp-beats",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "eyp",
   "summary": "beats setup (filebeat, topbeat)",
   "license": "Apache-2.0",
