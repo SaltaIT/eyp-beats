@@ -5,7 +5,7 @@
 # 05 - tomcatlog
 # 09 - filebeat general config
 # 10 - output config
-# 20 - shipper config
+# DELETED 20 - shipper config
 # 30 - logging config
 #
 class beats::filebeat (
@@ -46,12 +46,6 @@ class beats::filebeat (
     target  => '/etc/filebeat/filebeat.yml',
     order   => '10',
     content => template("${module_name}/output.erb"),
-  }
-
-  concat::fragment { 'filebeat shipper config':
-    target  => '/etc/filebeat/filebeat.yml',
-    order   => '20',
-    content => template("${module_name}/shipper.erb"),
   }
 
   concat::fragment { 'filebeat logging config':

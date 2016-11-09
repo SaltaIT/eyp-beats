@@ -29,12 +29,6 @@ class beats::topbeat(
     content => template("${module_name}/output.erb"),
   }
 
-  concat::fragment { 'topbeat shipper config':
-    target  => '/etc/topbeat/topbeat.yml',
-    order   => '20',
-    content => template("${module_name}/shipper.erb"),
-  }
-
   concat::fragment { 'topbeat logging config':
     target  => '/etc/topbeat/topbeat.yml',
     order   => '30',
