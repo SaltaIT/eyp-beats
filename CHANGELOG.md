@@ -3,6 +3,7 @@
 ## 0.1.3
 
 * moved to concat template
+* added tomcat log support (multiline)
 
 ## 0.1.2
 
