@@ -26,8 +26,6 @@ class beats (
     }
     else
     {
-      # fail('repo install failed: TODO')
-
       exec { 'which wget eyp-beats':
         command => 'which wget',
         unless  => 'which wget',
