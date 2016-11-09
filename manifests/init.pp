@@ -70,10 +70,6 @@ class beats (
         gpgkey   => 'https://artifacts.elastic.co/GPG-KEY-elasticsearch',
         require  => Exec['rpm import gpg eyp-beats repo'],
       }
-
     }
-
-
   }
-
 }
