@@ -11,11 +11,16 @@ class beats::params {
                                   '/var/log/cron',
                                   '/var/log/maillog',
                                 ]
+      $yumrepo=true
       case $::operatingsystemrelease
       {
-        /^[67].*$/:
+        /^6.*$/:
         {
-          $yumrepo=true
+          $audit_file_default='/etc/audit/audit.rules'
+        }
+        /^7.*$/:
+        {
+          $audit_file_default='/etc/audit/rules.d/eyp-audit.rules'
         }
         default: { fail('Unsupported RHEL/CentOS version!')  }
       }
@@ -28,15 +33,24 @@ class beats::params {
                                   '/var/log/dpkg.log',
                                   '/var/log/mail.log',
                                 ]
+      $yumrepo=false
       case $::operatingsystem
       {
         'Ubuntu':
         {
           case $::operatingsystemrelease
           {
-            /^1[468].*$/:
+            /^14.*$/:
             {
-              $yumrepo=false
+              $audit_file_default='/etc/audit/audit.rules'
+            }
+            /^16.*$/:
+            {
+              $audit_file_default='/etc/audit/audit.rules'
+            }
+            /^18.*$/:
+            {
+              $audit_file_default='/etc/audit/rules.d/audit.rules'
             }
             default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }
           }
