@@ -1,4 +1,4 @@
-class saltstack::master::config inherits saltstack::master {
+class beats::auditbeat::config inherits beats::auditbeat {
 
   file { '/etc/auditbeat/auditbeat.yml':
     ensure => 'present',
