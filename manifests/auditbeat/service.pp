@@ -14,9 +14,16 @@ class beats::auditbeat::service inherits beats::auditbeat {
   {
     if($beats::auditbeat::manage_service)
     {
-      service { $saltstack::params::master_service_name:
+      service { 'auditbeat':
         ensure => $beats::auditbeat::service_ensure,
         enable => $beats::auditbeat::service_enable,
+      }
+
+      if(defined(Class['::auditd']))
+      {
+        Service['auditbeat'] {
+          require => Class['::auditd'],
+        }
       }
     }
   }
