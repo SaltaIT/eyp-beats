@@ -11,7 +11,7 @@ auditbeat.modules:
 
 - module: auditd
   # Load audit rules from separate files. Same format as audit.rules(7).
-  <%- if @.any? -%>
+  <%- if @audit_files.any? -%>
   audit_rule_files: [ <%= @audit_files.map{ |val| "'#{val}'" }.join(',') %> ]
   <%- end -%>
   audit_rules: |
