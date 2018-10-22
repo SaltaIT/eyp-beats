@@ -14,15 +14,16 @@ class beats (
   {
     if(!$beats::params::yumrepo)
     {
-      exec { 'import key eyp-beats':
-        command => 'curl https://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -',
-        unless  => 'apt-key list | grep \'Elasticsearch (Elasticsearch Signing Key) <dev_ops@elasticsearch.org>\'',
+      apt::key { 'elastic':
+        key        => '9082FE6F8573CF200878DB0A65F655649F7EBECC',
+        key_source => 'https://packages.elasticsearch.org/GPG-KEY-elasticsearch',
       }
 
-      exec { 'add repo':
-        command => "bash -c 'echo \"deb https://artifacts.elastic.co/packages/${version}/apt stable main\" >> /etc/apt/sources.list.d/beats.list; apt-get update'",
-        unless  => "grep \"deb https://artifacts.elastic.co/packages/${version}/apt stable main\"/etc/apt/sources.list.d/beats.list"
-        require => Exec['import key eyp-beats'],
+      apt::source { 'elastic':
+        location => "https://artifacts.elastic.co/packages/${version}/apt",
+        release  => 'stable',
+        repos    => 'main',
+        require  => Apt::Key['elastic'],
       }
     }
     else
