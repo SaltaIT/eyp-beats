@@ -1,5 +1,6 @@
 #
 class beats (
+              $srcdir = '/usr/local/src',
               $import_repo       = true,
               $logstashhost      = undef,
               $elasticsearchhost = undef,
@@ -30,11 +31,16 @@ class beats (
     else
     {
 
+      download { 'GPG-KEY-elasticsearch':
+        url => 'https://packages.elastic.co/GPG-KEY-elasticsearch',
+        creates => "${srcdir}/GPG-KEY-elasticsearch",
+      }
+
       #sudo rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
       exec { 'rpm import gpg eyp-beats repo':
         command => 'rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch',
         unless  => "bash -c 'rpm -q gpg-pubkey-$(cat ${srcdir}/GPG-KEY-elasticsearch | gpg --throw-keyids | grep \"^pub\" | awk \"{ print \\\$2 }\" | cut -f2 -d/ | tr [A-Z] [a-z])'",
-        require => Exec['wget beats gpgkey'],
+        require => Download['GPG-KEY-elasticsearch'],
       }
 
       # Create a file with a .repo extension (for example, elastic.repo) in your /etc/yum.repos.d/ directory and add the following lines:
