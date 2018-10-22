@@ -3,6 +3,7 @@
 ## 0.1.4
 
 * updated to elastic 6.x
+* added **eyp-apt** as a dependency
 
 ## 0.1.3
 
