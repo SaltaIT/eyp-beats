@@ -1,9 +1,9 @@
 #
 class beats (
-              $srcdir                  = '/usr/local/src',
-              $import_repo             = true,
-              $logstashhost            = undef,
-              $elasticsearchhost       = undef,
+              $import_repo       = true,
+              $logstashhost      = undef,
+              $elasticsearchhost = undef,
+              $version           = '6.x',
             ) inherits beats::params {
 
   Exec {
@@ -20,27 +20,13 @@ class beats (
       }
 
       exec { 'add repo':
-        command => 'bash -c \'echo "deb https://packages.elastic.co/beats/apt stable main" >> /etc/apt/sources.list.d/beats.list; apt-get update\'',
+        command => "bash -c 'echo \"deb https://artifacts.elastic.co/packages/${version}/apt stable main\" >> /etc/apt/sources.list.d/beats.list; apt-get update'",
+        unless  => "grep \"deb https://artifacts.elastic.co/packages/${version}/apt stable main\"/etc/apt/sources.list.d/beats.list"
         require => Exec['import key eyp-beats'],
       }
     }
     else
     {
-      exec { 'which wget eyp-beats':
-        command => 'which wget',
-        unless  => 'which wget',
-      }
-
-      exec { "mkdir p eyp-beats ${srcdir}":
-        command => "mkdir -p ${srcdir}",
-        creates => $srcdir,
-      }
-
-      exec { 'wget beats gpgkey':
-        command => "wget https://packages.elastic.co/GPG-KEY-elasticsearch -O ${srcdir}/GPG-KEY-elasticsearch",
-        creates => "${srcdir}/GPG-KEY-elasticsearch",
-        require => Exec[ [ 'which wget eyp-beats', "mkdir p eyp-beats ${srcdir}" ] ],
-      }
 
       #sudo rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
       exec { 'rpm import gpg eyp-beats repo':
@@ -60,9 +46,18 @@ class beats (
       # autorefresh=1
       # type=rpm-md
 
-      yumrepo { 'elastic-5.x':
-        baseurl  => 'https://artifacts.elastic.co/packages/5.x/yum',
-        descr    => 'Elastic repository for 5.x packages',
+      # [elastic-6.x]
+      # name=Elastic repository for 6.x packages
+      # baseurl=https://artifacts.elastic.co/packages/6.x/yum
+      # gpgcheck=1
+      # gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+      # enabled=1
+      # autorefresh=1
+      # type=rpm-md
+
+      yumrepo { "elastic-${version}":
+        baseurl  => "https://artifacts.elastic.co/packages/${version}/yum",
+        descr    => "Elastic repository for ${version} packages",
         enabled  => '1',
         gpgcheck => '1',
         gpgkey   => 'https://artifacts.elastic.co/GPG-KEY-elasticsearch',
