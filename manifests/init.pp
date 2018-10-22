@@ -19,11 +19,12 @@ class beats (
         key_source => 'https://packages.elasticsearch.org/GPG-KEY-elasticsearch',
       }
 
+      ->
+
       apt::source { 'elastic':
         location => "https://artifacts.elastic.co/packages/${version}/apt",
         release  => 'stable',
         repos    => 'main',
-        require  => Apt::Key['elastic'],
       }
     }
     else
