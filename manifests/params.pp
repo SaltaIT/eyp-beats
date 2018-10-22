@@ -34,7 +34,7 @@ class beats::params {
         {
           case $::operatingsystemrelease
           {
-            /^14.*$/:
+            /^1[468].*$/:
             {
               $yumrepo=false
             }
