@@ -1,6 +1,6 @@
 #
 class beats (
-              $srcdir = '/usr/local/src',
+              $srcdir            = '/usr/local/src',
               $import_repo       = true,
               $logstashhost      = undef,
               $elasticsearchhost = undef,
