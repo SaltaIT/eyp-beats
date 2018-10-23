@@ -31,7 +31,7 @@ class beats (
     {
 
       download { 'GPG-KEY-elasticsearch':
-        url => 'https://packages.elastic.co/GPG-KEY-elasticsearch',
+        url     => 'https://packages.elastic.co/GPG-KEY-elasticsearch',
         creates => "${srcdir}/GPG-KEY-elasticsearch",
       }
 
