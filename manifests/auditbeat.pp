@@ -5,7 +5,7 @@ class beats::auditbeat(
                         $manage_docker_service       = true,
                         $service_ensure              = 'running',
                         $service_enable              = true,
-                        $audit_files                 = [ $beats::params::audit_file_default ],
+                        $audit_files                 = [ '/etc/auditbeat/audit.rules.d/*.conf' ],
                         $shipper_name                = undef,
                         $tags                        = [],
                         $fields                      = {},
@@ -16,6 +16,8 @@ class beats::auditbeat(
                         $output_file_rotate_every_kb = '10240',
                         $output_file_number_of_files = '7',
                         $output_file_permissions     = '0600',
+                        $auditd_rules_recurse        = true,
+                        $auditd_rules_purge          = true,
                       ) inherits beats::params {
 
   include ::beats

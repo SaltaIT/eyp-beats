@@ -14,13 +14,8 @@ class beats::params {
       $yumrepo=true
       case $::operatingsystemrelease
       {
-        /^6.*$/:
+        /^[67].*$/:
         {
-          $audit_file_default='/etc/audit/audit.rules'
-        }
-        /^7.*$/:
-        {
-          $audit_file_default='/etc/audit/rules.d/eyp-audit.rules'
         }
         default: { fail('Unsupported RHEL/CentOS version!')  }
       }
@@ -40,17 +35,8 @@ class beats::params {
         {
           case $::operatingsystemrelease
           {
-            /^14.*$/:
+            /^1[468].*$/:
             {
-              $audit_file_default='/etc/audit/audit.rules'
-            }
-            /^16.*$/:
-            {
-              $audit_file_default='/etc/audit/audit.rules'
-            }
-            /^18.*$/:
-            {
-              $audit_file_default='/etc/audit/rules.d/audit.rules'
             }
             default: { fail("Unsupported Ubuntu version! - ${::operatingsystemrelease}")  }
           }
