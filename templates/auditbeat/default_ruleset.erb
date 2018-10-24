@@ -25,7 +25,7 @@
 -w /etc/shadow -p wa -k identity
 -w /etc/security/opasswd -p wa -k identity
 
-# Record Events That Modify the System\'s Network Environment
+# Record Events That Modify the System's Network Environment
 <% if scope.lookupvar('beats::params::arch64') -%>
 -a exit,always -F arch=b64 -S sethostname -S setdomainname -k system-network-env
 <% end -%>
