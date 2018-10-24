@@ -33,7 +33,7 @@
 -w /etc/issue -p wa -k system-network-env
 -w /etc/issue.net -p wa -k system-network-env
 -w /etc/hosts -p wa -k system-network-env
-<% if(@sysconfig) -%>
+<% if scope.lookupvar('beats::params::sysconfig') -%>
 -w /etc/sysconfig/network -p wa -k system-network-env
 <% end -%>
 
