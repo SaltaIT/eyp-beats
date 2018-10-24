@@ -16,13 +16,13 @@ auditbeat.modules:
   <%- end -%>
   audit_rules: |
     ## Define audit rules here.
+<%- if @file_integrity_paths.any? -%>
 - module: file_integrity
   paths:
-  - /bin
-  - /usr/bin
-  - /sbin
-  - /usr/sbin
-  - /etc
+  <%- @file_integrity_paths.each do |file_integrity_path| -%>
+  - <%= file_integrity_path %>
+  <%- end -%>
+<%- end -%>
 
 
 #==================== Elasticsearch template setting ==========================

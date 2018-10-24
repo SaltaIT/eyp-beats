@@ -18,6 +18,7 @@ class beats::auditbeat(
                         $output_file_rotate_every_kb = '10240',
                         $output_file_number_of_files = '7',
                         $output_file_permissions     = '0600',
+                        $file_integrity_paths        = [],
                       ) inherits beats::params {
 
   include ::beats

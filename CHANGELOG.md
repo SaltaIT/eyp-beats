@@ -5,6 +5,7 @@
 * updated to elastic 6.x
 * added **eyp-apt** as a dependency
 * added support for Ubuntu 16.04 and 18.04
+* added auditbeat support
 * **INCOMPATIBLE CHANGE**:
   - filebeat complete rework
 
