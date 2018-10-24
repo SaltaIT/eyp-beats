@@ -1,5 +1,6 @@
 class { 'beats::auditbeat':
-  output_file_dir => '/var/log/audit',
+  output_file_dir     => '/var/log/audit',
+  add_default_ruleset => true,
 }
 
 # -a always,exit -F arch=b64 -S execve,execveat -k exec
