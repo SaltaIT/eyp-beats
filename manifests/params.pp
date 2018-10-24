@@ -1,9 +1,17 @@
 class beats::params {
 
+  case $::architecture
+  {
+    'x86_64': { $arch64=true }
+    'amd64': { $arch64=true }
+    default: { $arch64=false }
+  }
+
   case $::osfamily
   {
     'redhat':
     {
+      $sysconfig=true
       $filebeat_paths_default = [
                                   '/var/log/messages',
                                   '/var/log/secure',
@@ -22,6 +30,7 @@ class beats::params {
     }
     'Debian':
     {
+      $sysconfig=false
       $filebeat_paths_default = [
                                   '/var/log/auth.log',
                                   '/var/log/syslog',
