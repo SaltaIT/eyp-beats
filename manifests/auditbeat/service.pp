@@ -21,5 +21,4 @@ class beats::auditbeat::service inherits beats::auditbeat {
       }
     }
   }
-
 }
