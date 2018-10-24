@@ -14,7 +14,7 @@ define beats::filebeat::input (
                                 $multiline_negate     = undef,
                                 $multiline_match      = undef,
                               ) {
-  concat::fragment{ 'filebeat.yml header':
+  concat::fragment{ "filebeat.yml input ${input_name} - ${name}":
     target  => '/etc/filebeat/filebeat.yml',
     order   => "b${order}",
     content => template("${module_name}/filebeat/input.erb"),
