@@ -20,6 +20,6 @@ class { 'beats::filebeat':
 
 beats::filebeat::input { 'auditbeat':
   paths                => [ '/var/log/audit/auditbeat' ],
-  fields               => { 'auditbeat' => 'true' },
+  fields               => { 'auditbeat' => true },
   json_keys_under_root => true,
 }
