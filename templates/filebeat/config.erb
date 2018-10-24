@@ -1,31 +1,25 @@
 #
 # puppet managed file
 #
-###################### Auditbeat Configuration Example #########################
+###################### Filebeat Configuration Example #########################
+#
+# For more available modules and options, please see the filebeat.reference.yml sample
+# configuration file.
 
-# You can find the full configuration reference here:
-# https://www.elastic.co/guide/en/beats/auditbeat/index.html
+#============================= Filebeat modules ===============================
 
-#==========================  Modules configuration =============================
-auditbeat.modules:
+filebeat.config.modules:
+  # Glob pattern for configuration loading
+  path: ${path.config}/modules.d/*.yml
 
-- module: auditd
-  # Load audit rules from separate files. Same format as audit.rules(7).
-  <%- if @audit_files.any? -%>
-  audit_rule_files: [ <%= @audit_files.map{ |val| "'#{val}'" }.join(',') %> ]
-  <%- end -%>
-  audit_rules: |
-    ## Define audit rules here.
-- module: file_integrity
-  paths:
-  - /bin
-  - /usr/bin
-  - /sbin
-  - /usr/sbin
-  - /etc
+  # Set to true to enable config reloading
+  reload.enabled: false
 
+  # Period on which files under path should be checked for changes
+  #reload.period: 10s
 
 #==================== Elasticsearch template setting ==========================
+
 setup.template.settings:
   index.number_of_shards: 3
   #index.codec: best_compression
@@ -33,26 +27,18 @@ setup.template.settings:
 
 #================================ General =====================================
 
-<% if defined?(@shipper_name) -%>
 # The name of the shipper that publishes the network data. It can be used to group
 # all the transactions sent by a single shipper in the web interface.
-name: <%= @shipper_name %>
-<% end -%>
+#name:
 
-<% if @tags.any? -%>
 # The tags of the shipper are included in their own field with each
 # transaction published.
-tags: [ <%= @tags.map{ |val| "\"#{val}\"" }.join(',') %> ]
-<% end -%>
+#tags: ["service-X", "web-tier"]
 
-<% if @fields.any? -%>
 # Optional fields that you can specify to add additional information to the
 # output.
-fields:
-  <%- @fields.each do | key, value | -%>
-  <%= key %>: <%= value %>
-  <%- end -%>
-<% end -%>
+#fields:
+#  env: staging
 
 
 #============================== Dashboards =====================================
@@ -81,7 +67,7 @@ setup.kibana:
 
 #============================= Elastic Cloud ==================================
 
-# These settings simplify using auditbeat with the Elastic Cloud (https://cloud.elastic.co/).
+# These settings simplify using filebeat with the Elastic Cloud (https://cloud.elastic.co/).
 
 # The cloud.id setting overwrites the `output.elasticsearch.hosts` and
 # `setup.kibana.host` options.
@@ -96,23 +82,20 @@ setup.kibana:
 
 # Configure what output to use when sending the data collected by the beat.
 
-<% if @elasticsearch_hosts.any? -%>
 #-------------------------- Elasticsearch output ------------------------------
 output.elasticsearch:
   # Array of hosts to connect to.
-  hosts: [ <%= @elasticsearch_hosts.map{ |val| "\"#{val}\"" }.join(',') %> ]
+  hosts: ["localhost:9200"]
 
   # Optional protocol and basic auth credentials.
   #protocol: "https"
   #username: "elastic"
   #password: "changeme"
-<% end -%>
 
-<% if @logstash_hosts.any? -%>
 #----------------------------- Logstash output --------------------------------
-output.logstash:
+#output.logstash:
   # The Logstash hosts
-  hosts: [ <%= @logstash_hosts.map{ |val| "\"#{val}\"" }.join(',') %> ]
+  #hosts: ["localhost:5044"]
 
   # Optional SSL. By default is off.
   # List of root certificates for HTTPS server verifications
@@ -123,21 +106,6 @@ output.logstash:
 
   # Client Certificate Key
   #ssl.key: "/etc/pki/client/cert.key"
-<% end -%>
-
-<% if defined?(@output_file_dir) -%>
-#------------------------------- File output ----------------------------------
-output.file:
-  path: "<%= @output_file_dir %>"
-  <%- if defined?(@output_file_name) -%>
-  filename: <%= @output_file_name %>
-  <%- else -%>
-  filename: auditbeat
-  <%- end -%>
-  rotate_every_kb: <%= @rotate_every_kb %>
-  number_of_files: <%= @number_of_files %>
-  permissions: <%= @permissions %>
-<% end -%>
 
 #================================ Logging =====================================
 
@@ -151,7 +119,7 @@ output.file:
 #logging.selectors: ["*"]
 
 #============================== Xpack Monitoring ===============================
-# auditbeat can export internal metrics to a central Elasticsearch monitoring
+# filebeat can export internal metrics to a central Elasticsearch monitoring
 # cluster.  This requires xpack monitoring to be enabled in Elasticsearch.  The
 # reporting is disabled by default.
 
@@ -164,3 +132,11 @@ output.file:
 # have the Elasticsearch output configured, you can simply uncomment the
 # following line.
 #xpack.monitoring.elasticsearch:
+
+#=========================== Filebeat inputs =============================
+
+filebeat.inputs:
+
+# Each - is an input. Most options can be set at the input level, so
+# you can use different inputs for various configurations.
+# Below are the input specific configurations.

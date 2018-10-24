@@ -1,0 +1,70 @@
+# == <%= @input_name %> ==
+- type: <%= @type %>
+
+  # Change to true to enable this input configuration.
+  enabled: <%= @enabled %>
+
+  <%- if @paths.any? -%>
+  # Paths that should be crawled and fetched. Glob based paths.
+  paths:
+    <%- @paths.each do |val| -%>
+    - <%= val %>
+    <%- end -%>
+  <%- end -%>
+
+  <%- if defined?(@json_keys_under_root) -%>
+  json.keys_under_root: <%= @json_keys_under_root %>
+  <%- end -%>
+
+  <%- if defined?(@scan_frequency) -%>
+  scan_frequency: <%= @scan_frequency %>
+  <%- end -%>
+
+  <%- if @exclude_lines.any? -%>
+  # Exclude lines. A list of regular expressions to match. It drops the lines that are
+  # matching any regular expression from the list.
+  exclude_lines: [<%= @exclude_lines.map{ |val| "'#{val}'" }.join(',') %>]
+  <%- end -%>
+
+  <%- if @include_lines.any? -%>
+  # Include lines. A list of regular expressions to match. It exports the lines that are
+  # matching any regular expression from the list.
+  include_lines: [<%= @include_lines.map{ |val| "'#{val}'" }.join(',') %>]
+  <%- end -%>
+
+  <%- if @exclude_files.any? -%>
+  # Exclude files. A list of regular expressions to match. Filebeat drops the files that
+  # are matching any regular expression from the list. By default, no files are dropped.
+  exclude_files: [<%= @exclude_files.map{ |val| "'#{val}'" }.join(',') %>]
+  <%- end -%>
+
+  <%- if @fields.any? -%>
+  # Optional additional fields. These fields can be freely picked
+  # to add additional information to the crawled log files for filtering
+  fields:
+    <%- @fields.each do | key, value | -%>
+    <%= key %>: <%= value %>
+    <%- end -%>
+  <%- end -%>
+
+  ### Multiline options
+
+  # Multiline can be used for log messages spanning multiple lines. This is common
+  # for Java Stack Traces or C-Line Continuation
+
+  # The regexp Pattern that has to be matched. The example pattern matches all lines starting with [
+  <%- if defined?(@multiline_pattern) -%>
+  #multiline.pattern: <%= @multiline_pattern %>
+  <%- end -%>
+
+  # Defines if the pattern set under pattern should be negated or not. Default is false.
+  <%- if defined?(@multiline_negate) -%>
+  multiline.negate: <%= @multiline_negate %>
+  <%- end -%>
+
+  # Match can be set to "after" or "before". It is used to define if lines should be append to a pattern
+  # that was (not) matched before or after or as long as a pattern is not matched based on negate.
+  # Note: After is the equivalent to previous and before is the equivalent to to next in Logstash
+  <%- if defined?(@multiline_match) -%>
+  multiline.match: <%= @multiline_match %>
+  <%- end -%>

@@ -2,8 +2,6 @@
 class beats (
               $srcdir            = '/usr/local/src',
               $import_repo       = true,
-              $logstashhost      = undef,
-              $elasticsearchhost = undef,
               $version           = '6.x',
             ) inherits beats::params {
 
