@@ -27,7 +27,7 @@ class beats::auditbeat::config inherits beats::auditbeat {
       require => File['/etc/auditbeat/audit.rules.d'],
     }
 
-    concat::fragment{ "${audit_file} fsrule ${name} ${path} ${keyname}":
+    concat::fragment{ 'default auditbeat ruleset':
       target  => '/etc/auditbeat/audit.rules.d/default_ruleset.conf',
       order   => '00',
       content => template("${module_name}/auditbeat/default_ruleset.erb"),

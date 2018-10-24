@@ -23,7 +23,7 @@ define beats::auditbeat::syscallrule(
     }
   }
 
-  concat::fragment{ "${audit::params::audit_file} action ${name} ${syscall} ${keyname} ${action}":
+  concat::fragment{ "${audit_file} syscallrule ${name} ${syscalls} ${keyname} ${actions}":
     target  => $audit_file,
     order   => $order,
     content => template("${module_name}/auditbeat/syscallrule.erb"),
