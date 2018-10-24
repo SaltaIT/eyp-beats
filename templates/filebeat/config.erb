@@ -74,20 +74,23 @@ setup.kibana:
 
 # Configure what output to use when sending the data collected by the beat.
 
+<% if @elasticsearch_hosts.any? -%>
 #-------------------------- Elasticsearch output ------------------------------
 output.elasticsearch:
   # Array of hosts to connect to.
-  hosts: ["localhost:9200"]
+  hosts: [ <%= @elasticsearch_hosts.map{ |val| "\"#{val}\"" }.join(',') %> ]
 
   # Optional protocol and basic auth credentials.
   #protocol: "https"
   #username: "elastic"
   #password: "changeme"
+<% end -%>
 
+<% if @logstash_hosts.any? -%>
 #----------------------------- Logstash output --------------------------------
-#output.logstash:
+output.logstash:
   # The Logstash hosts
-  #hosts: ["localhost:5044"]
+  hosts: [ <%= @logstash_hosts.map{ |val| "\"#{val}\"" }.join(',') %> ]
 
   # Optional SSL. By default is off.
   # List of root certificates for HTTPS server verifications
@@ -98,6 +101,7 @@ output.elasticsearch:
 
   # Client Certificate Key
   #ssl.key: "/etc/pki/client/cert.key"
+<% end -%>
 
 #================================ Logging =====================================
 
