@@ -1,7 +1,7 @@
 {
   "name": "eyp-beats",
   "version": "0.2.0",
-  "author": "eyp",
+  "author": "Jordi Prats",
   "summary": "beats setup",
   "license": "Apache-2.0",
   "source": "https://github.com/SaltaIT/eyp-beats",
